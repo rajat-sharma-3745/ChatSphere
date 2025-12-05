@@ -1,18 +1,30 @@
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 import { useSocket } from "./socketContext";
 import { useSocketEvents } from "../hooks/useSocket";
-import { MEMBER_JOINED, MEMBER_LEAVED, ONLINE_USERS } from "../constants/events";
+import {
+  MEMBER_JOINED,
+  MEMBER_LEAVED,
+  ONLINE_USERS,
+} from "../constants/events";
+import { useAppContext } from "./AppContext";
 
 const ChannelContext = createContext();
 
 export const ChannelProvider = ({ children }) => {
-  const [channels, setChannels] = useState([]);               
-  const [discoverChannels, setDiscoverChannels] = useState([]); 
+  const { logout } = useAppContext();
+  const [channels, setChannels] = useState([]);
+  const [discoverChannels, setDiscoverChannels] = useState([]);
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [loadingChannels, setLoadingChannels] = useState(false);
-  const [onlineUsers,setOnlineUsers] = useState([])
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const socket = useSocket();
 
   const fetchMyChannels = async () => {
@@ -20,6 +32,10 @@ export const ChannelProvider = ({ children }) => {
       setLoadingChannels(true);
       const { data } = await axiosInstance.get(API_PATHS.CHANNEL.MY_CHANNELS);
       setChannels(data.channels || []);
+    } catch (error) {
+      if (error?.response?.status === 401) {
+        logout();
+      }
     } finally {
       setLoadingChannels(false);
     }
@@ -30,7 +46,9 @@ export const ChannelProvider = ({ children }) => {
       const { data } = await axiosInstance.get(API_PATHS.CHANNEL.DISCOVER);
       setDiscoverChannels(data.channels || []);
     } catch (error) {
-      console.error("Discover channels fetch error:", error);
+      if (error?.response?.status === 401) {
+        logout();
+      }
     }
   };
 
@@ -46,37 +64,43 @@ export const ChannelProvider = ({ children }) => {
 
   const handleLeaveChannelToState = (channel) => {
     setChannels((prev) => prev.filter((c) => c._id !== channel?._id));
-     setDiscoverChannels((prev) => [...prev, channel]);
+    setDiscoverChannels((prev) => [...prev, channel]);
   };
   const updateChannelMembersInState = (channelId, updateFn) => {
-  setChannels((prevChannels) =>
-    prevChannels.map((channel) => {
-      if (channel._id === channelId) {
-        return {
-          ...channel,
-          members: updateFn(channel.members || [])
-        };
-      }
-      return channel;
-    })
-  )}
+    setChannels((prevChannels) =>
+      prevChannels.map((channel) => {
+        if (channel._id === channelId) {
+          return {
+            ...channel,
+            members: updateFn(channel.members || []),
+          };
+        }
+        return channel;
+      })
+    );
+  };
 
-  const onlineUserHanlder = (data) =>{
+  const onlineUserHanlder = (data) => {
     setOnlineUsers(data);
-  }
-  const joinHandler = useCallback(({channelId,member})=>{
-   updateChannelMembersInState(channelId, (prevMembers) => [...prevMembers, member])
-  },[])
-  const leaveHandler = useCallback(({channelId,memberId})=>{
-   updateChannelMembersInState(channelId, (prev) => prev.filter(m => m._id !== memberId))
-  },[])
+  };
+  const joinHandler = useCallback(({ channelId, member }) => {
+    updateChannelMembersInState(channelId, (prevMembers) => [
+      ...prevMembers,
+      member,
+    ]);
+  }, []);
+  const leaveHandler = useCallback(({ channelId, memberId }) => {
+    updateChannelMembersInState(channelId, (prev) =>
+      prev.filter((m) => m._id !== memberId)
+    );
+  }, []);
 
   const handlers = {
-    [ONLINE_USERS]:onlineUserHanlder,
-    [MEMBER_JOINED]:joinHandler,
-    [MEMBER_LEAVED]:leaveHandler
-  }
-  useSocketEvents(socket,handlers)
+    [ONLINE_USERS]: onlineUserHanlder,
+    [MEMBER_JOINED]: joinHandler,
+    [MEMBER_LEAVED]: leaveHandler,
+  };
+  useSocketEvents(socket, handlers);
 
   return (
     <ChannelContext.Provider
@@ -91,7 +115,7 @@ export const ChannelProvider = ({ children }) => {
         fetchMyChannels,
         fetchDiscoverChannels,
         handleJoinChannelToState,
-        handleLeaveChannelToState
+        handleLeaveChannelToState,
       }}
     >
       {children}
@@ -99,4 +123,4 @@ export const ChannelProvider = ({ children }) => {
   );
 };
 
-export const useChannels = () => useContext(ChannelContext)
+export const useChannels = () => useContext(ChannelContext);

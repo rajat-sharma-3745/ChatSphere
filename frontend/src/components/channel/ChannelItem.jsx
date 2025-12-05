@@ -17,7 +17,7 @@ export const ChannelItem = ({
   onClose,
   selectedChat,
 }) => {
-  // const {user} = useAppContext();
+  
   const navigate = useNavigate();
   const socket = useSocket();
   const { setSelectedChannel } = useChannels();

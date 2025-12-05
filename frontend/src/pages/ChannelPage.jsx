@@ -127,6 +127,7 @@ const ChannelPage = () => {
           ref={containerRef}
           messages={allMessages}
           currentUserId={user?._id}
+          loading={loading}
         />
       }
 

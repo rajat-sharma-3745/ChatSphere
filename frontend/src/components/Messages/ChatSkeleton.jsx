@@ -32,6 +32,38 @@ const ChatSkeleton = () => {
             <div className="w-28 h-4 bg-gray-200 animate-pulse rounded"></div>
           </div>
         </div>
+         <div className="flex gap-3 justify-end">
+          <div className="flex flex-col items-end gap-2">
+            <div className="w-48 h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="w-32 h-4 bg-gray-200 animate-pulse rounded"></div>
+          </div>
+        </div>
+        <div className="flex gap-3">
+          <div className={`w-8 h-8 ${Shimmer}`}></div>
+          <div className="flex flex-col gap-2">
+            <div className="w-52 h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="w-28 h-4 bg-gray-200 animate-pulse rounded"></div>
+          </div>
+        </div>
+         <div className="flex gap-3 justify-end">
+          <div className="flex flex-col items-end gap-2">
+            <div className="w-48 h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="w-32 h-4 bg-gray-200 animate-pulse rounded"></div>
+          </div>
+        </div>
+        <div className="flex gap-3">
+          <div className={`w-8 h-8 ${Shimmer}`}></div>
+          <div className="flex flex-col gap-2">
+            <div className="w-52 h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="w-28 h-4 bg-gray-200 animate-pulse rounded"></div>
+          </div>
+        </div>
+         <div className="flex gap-3 justify-end">
+          <div className="flex flex-col items-end gap-2">
+            <div className="w-48 h-4 bg-gray-200 animate-pulse rounded"></div>
+            <div className="w-32 h-4 bg-gray-200 animate-pulse rounded"></div>
+          </div>
+        </div>
       </div>
 
      
