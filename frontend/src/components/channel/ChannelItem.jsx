@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Avatar from "../common/Avatar";
 import { FiUsers } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useChannels } from "../../context/ChannelContext";
 import { LuLoaderCircle } from "react-icons/lu";
 import { toast } from "sonner";
@@ -17,7 +17,7 @@ export const ChannelItem = ({
   onClose,
   selectedChat,
 }) => {
-  
+  const {onToggleSidebar} = useOutletContext();
   const navigate = useNavigate();
   const socket = useSocket();
   const { setSelectedChannel } = useChannels();
@@ -45,6 +45,7 @@ export const ChannelItem = ({
         socket.emit(MEMBER_JOINED, channel._id);
         setSelectedChannel(channel);
         navigate(`/channel/${channel._id}`);
+        onToggleSidebar();
       }
     } catch (error) {
       toast.error(

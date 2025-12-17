@@ -5,10 +5,12 @@ import Sidebar from "./common/Sidebar";
 
 export default function AppLayout() {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
-
+  function onToggleSidebar(){
+    setSidebarOpen(!sidebarOpen)
+  }
   return (
     <div className="flex h-screen w-full flex-col bg-gray-50 text-gray-900">
-      <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+      <Navbar onToggleSidebar={onToggleSidebar} />
 
       <div className="flex flex-1 overflow-hidden">
         <aside
@@ -26,9 +28,9 @@ export default function AppLayout() {
           ></div>
         )}
 
-        <main className="flex-1 overflow-y-auto md:ml-0">
+        <main className="flex-1 overflow-hidden md:ml-0">
           <div className="h-full">
-            <Outlet />
+            <Outlet context={{onToggleSidebar}} />
           </div>
         </main>
       </div>
