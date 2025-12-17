@@ -7,7 +7,8 @@ import {
   getAllChannels,
   getMyChannels,
   getChannelById,
-  getMessages
+  getMessages,
+  searchMessages
 } from "../controllers/channelController.js";
 
 const router = express.Router();
@@ -24,7 +25,11 @@ router.get("/my", protect, getMyChannels);
 
 router.get("/:id", protect, getChannelById);
 
-router.get('/message/:channelId',protect, getMessages)
+router.get('/messages/search',protect, searchMessages);
+router.get('/message/:channelId',protect, getMessages);
+
+
+
 
 
 export default router;
