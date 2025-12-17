@@ -28,7 +28,7 @@ export default function AppLayout() {
           ></div>
         )}
 
-        <main className="flex-1 overflow-hidden min-h-0 md:ml-0">
+        <main className="flex-1 overflow-hidden md:ml-0">
           <div className="h-full">
             <Outlet />
           </div>

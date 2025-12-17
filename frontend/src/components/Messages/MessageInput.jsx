@@ -17,7 +17,7 @@ const MessageInput = ({ onSend, onTyping, text, setText }) => {
   };
 
   return (
-    <div className="border-t border-gray-200 px-4 py-3 bg-white flex items-center gap-3">
+    <div className="sticky bottom-0 border-t border-gray-200 px-4 py-3 bg-white flex items-center gap-3">
       <input
         type="text"
         placeholder="Type a message..."
