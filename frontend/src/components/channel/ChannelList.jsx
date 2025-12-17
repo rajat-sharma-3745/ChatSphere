@@ -22,7 +22,7 @@ export const ChannelList = ({ channels = [], showMembers = true, onClose }) => {
         ))
       ) : (
         <p className="text-center text-gray-500">
-          No channels joined.
+          {showMembers ? "No channels joined." :"No channels to join"}
         </p>
       )}
     </div>

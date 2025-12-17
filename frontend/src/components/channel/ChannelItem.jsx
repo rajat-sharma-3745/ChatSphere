@@ -60,12 +60,12 @@ export const ChannelItem = ({
   return (
     <div
       className={`w-full flex items-center gap-3 p-3 rounded-xl ${
-        showMembers && "hover:bg-gray-100"
+        showMembers && "hover:bg-gray-100 "
       }  transition ${selectedChat && "bg-gray-200"}`}
     >
       <button
         onClick={showMembers && handleClick}
-        className="flex items-center gap-3 flex-1 text-left"
+        className={`flex items-center gap-3 flex-1 text-left ${showMembers && 'cursor-pointer'}`}
       >
         <Avatar type="channel" name={channel.name} size="md" />
 

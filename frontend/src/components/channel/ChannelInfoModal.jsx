@@ -2,9 +2,11 @@ import React from "react";
 import Modal from "../common/Modal";
 import Avatar from "../common/Avatar";
 import { useChannels } from "../../context/ChannelContext";
+import { useAppContext } from "../../context/AppContext";
 
 const ChannelInfoModal = ({ isOpen, onClose, channel }) => {
   const { onlineUsers } = useChannels();
+  const {user} = useAppContext();
   if (!channel) return null;
 
   return (
@@ -38,7 +40,7 @@ const ChannelInfoModal = ({ isOpen, onClose, channel }) => {
                   className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition"
                 >
                   <Avatar type="user" name={member?.username} size="sm" />
-                  <span className="text-gray-800">{member?.username}</span>
+                  <span className="text-gray-800">{user._id===member._id?'You':member?.username}</span>
                   {isOnline && (
                     <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                   )}
