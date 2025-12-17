@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Avatar from "../common/Avatar";
-import { FiInfo, FiLogOut } from "react-icons/fi";
+import { FiInfo, FiLogOut, FiSearch } from "react-icons/fi";
 import ChannelInfoModal from "../channel/ChannelInfoModal";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { LuLoaderCircle } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
-const ChatHeader = ({ channel, onlineCount = 0 }) => {
+const ChatHeader = ({ channel,setIsSearchOpen }) => {
   const navigate = useNavigate();
   const [infoOpen, setInfoOpen] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
@@ -57,19 +57,29 @@ const ChatHeader = ({ channel, onlineCount = 0 }) => {
           </div>
         </div>
 
-        <button
-          onClick={leaveChannel}
-          className="flex items-center cursor-pointer gap-2 px-3 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
-        >
-          {isLeaving ? (
-            <LuLoaderCircle className="animate-spin" />
-          ) : (
-            <>
-              <span className="hidden sm:inline">Leave</span>
-              <FiLogOut className="w-5 h-5" />
-            </>
-          )}
-        </button>
+           <div className="flex items-center gap-3">
+
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className="p-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+          >
+            <FiSearch className="w-6 h-6 text-gray-700" />
+          </button>
+
+          <button
+            onClick={leaveChannel}
+            className="flex items-center cursor-pointer gap-2 px-3 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+          >
+            {isLeaving ? (
+              <LuLoaderCircle className="animate-spin" />
+            ) : (
+              <>
+                <span className="hidden sm:inline">Leave</span>
+                <FiLogOut className="w-5 h-5" />
+              </>
+            )}
+          </button>
+        </div>
       </header>
 
       <ChannelInfoModal
