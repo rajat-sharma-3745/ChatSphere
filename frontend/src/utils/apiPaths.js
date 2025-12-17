@@ -16,7 +16,8 @@ export const API_PATHS = {
         DETAILS: (id) => `/channels/${id}`,
     },
     MESSAGE:{
-        GET:(channelId,page)=>`/channels/message/${channelId}?page=${page}`
+        GET:(channelId,page)=>`/channels/message/${channelId}?page=${page}`,
+        SEARCH:(channelId,query)=>`/channels/messages/search?channelId=${channelId}&query=${query}`
     }
 
 
