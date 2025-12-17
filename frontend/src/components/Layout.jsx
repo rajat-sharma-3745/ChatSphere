@@ -9,7 +9,7 @@ export default function AppLayout() {
     setSidebarOpen(!sidebarOpen)
   }
   return (
-    <div className="flex h-screen w-full flex-col bg-gray-50 text-gray-900">
+    <div className="flex h-dvh w-full flex-col bg-gray-50 text-gray-900">
       <Navbar onToggleSidebar={onToggleSidebar} />
 
       <div className="flex flex-1 overflow-hidden">
