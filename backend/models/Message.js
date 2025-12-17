@@ -22,6 +22,7 @@ const messageSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+messageSchema.index({ content: "text" });
 
 messageSchema.index({ channelId: 1, createdAt: -1 });
 
