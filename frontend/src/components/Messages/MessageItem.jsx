@@ -7,7 +7,7 @@ const MessageItem = ({ message, isOwn, isOnline }) => {
     <div
       className={`flex items-start gap-3 mb-4 ${
         isOwn ? "flex-row-reverse" : ""
-      }`}
+      }`} id={message?._id}
     >
       {!isOwn && (
         <div className="relative">
