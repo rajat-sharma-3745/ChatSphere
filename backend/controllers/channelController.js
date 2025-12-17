@@ -160,3 +160,54 @@ export const getMessages = asyncHandler(async (req, res, next) => {
 
 
 })
+
+export const searchMessages = asyncHandler(async (req, res) => {
+    const { channelId, query } = req.query;
+    const limit = 10;
+
+    if (!channelId || !query) {
+        return res.status(200).json({ results: [] });
+    }
+
+    const messages = await Message.find(
+        {
+            channelId,
+            $text: { $search: query }
+        },
+        {
+            score: { $meta: "textScore" }
+        }
+    )
+        .sort({ score: { $meta: "textScore" } })
+        .limit(30)
+        .populate("sender", "username");
+
+
+    const results = await Promise.all(
+        messages.map(async (msg) => {
+           
+            const index = await Message.countDocuments({
+                channelId,
+                createdAt: { $gte: msg.createdAt }
+            });
+
+            
+            const page = Math.ceil(index / limit);
+
+            return {
+                _id: msg._id,
+                content: msg.content,
+                sender: msg.sender,
+                createdAt: msg.createdAt,
+                channelId: msg.channelId,
+                page, 
+            };
+        })
+    )
+
+
+    res.status(200).json({
+        success: true,
+        results
+    });
+});
