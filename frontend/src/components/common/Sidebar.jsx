@@ -4,7 +4,7 @@ import UserProfile from "../UserProfile";
 import { useAppContext } from "../../context/AppContext";
 import { useChannels } from "../../context/ChannelContext";
 
-const Sidebar = () => {
+const Sidebar = ({onToggleSidebar}) => {
   const { user, logout } = useAppContext();
   const { channels } = useChannels();
   return (
@@ -13,7 +13,7 @@ const Sidebar = () => {
         <h2 className="text-lg font-semibold text-gray-700 mb-3 px-1">
           Channels
         </h2>
-        <ChannelList channels={channels} showMembers={true} />
+        <ChannelList channels={channels} showMembers={true} onToggleSidebar={onToggleSidebar} />
       </div>
 
       <UserProfile user={user} onLogout={logout} />

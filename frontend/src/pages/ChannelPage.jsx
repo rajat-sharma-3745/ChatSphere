@@ -186,7 +186,7 @@ const ChannelPage = () => {
   };
   const allMessages = [...oldMessages, ...messages];
   return (
-    <div className="flex flex-col h-dvh w-full bg-white">
+    <div className="flex flex-col h-full w-full bg-white">
       <ChatHeader
         isSearchOpen={isSearchOpen}
         setIsSearchOpen={setIsSearchOpen}

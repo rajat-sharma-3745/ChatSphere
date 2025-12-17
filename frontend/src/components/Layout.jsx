@@ -18,7 +18,7 @@ export default function AppLayout() {
             sidebarOpen ? "translate-x-0" : "-translate-x-64 md:translate-x-0"
           }`}
         >
-          <Sidebar />
+          <Sidebar onToggleSidebar={onToggleSidebar} />
         </aside>
 
         {sidebarOpen && (
@@ -30,7 +30,7 @@ export default function AppLayout() {
 
         <main className="flex-1 overflow-hidden md:ml-0">
           <div className="h-full">
-            <Outlet context={{onToggleSidebar}} />
+            <Outlet />
           </div>
         </main>
       </div>

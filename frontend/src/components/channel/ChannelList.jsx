@@ -3,7 +3,7 @@ import { ChannelItem } from "./ChannelItem";
 import { useChannels } from "../../context/ChannelContext";
 import { ChannelItemSkeleton } from "./ChannelItemSkeleton";
 
-export const ChannelList = ({ channels = [], showMembers = true, onClose }) => {
+export const ChannelList = ({ channels = [], showMembers = true, onClose,onToggleSidebar }) => {
   const { id } = useParams();
   const { loadingChannels } = useChannels();
   return (
@@ -18,6 +18,7 @@ export const ChannelList = ({ channels = [], showMembers = true, onClose }) => {
             showMembers={showMembers}
             onClose={onClose}
             selectedChat={id === ch._id}
+            onToggleSidebar={onToggleSidebar}
           />
         ))
       ) : (
